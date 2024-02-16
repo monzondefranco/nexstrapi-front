@@ -1,0 +1,26 @@
+import { twMerge } from "tailwind-merge"
+
+
+type Props = {
+  className?: string
+  title?: string
+  content?: string
+}
+
+export default function AboutUsPage({
+  className,
+  title,
+  content,
+}: Props) {
+
+  return (
+    <section className={twMerge(styles.container, className)}>
+        <div>{title}</div>
+        <div>{content}</div>
+    </section>
+  )
+}
+
+const styles = {
+    container: 'flex flex-col items-center justify-between p-24',
+}
