@@ -15,8 +15,8 @@ export default function AboutUsPage({
 
   return (
     <section className={twMerge(styles.container, className)}>
-        <div>{title}</div>
-        <div>{content}</div>
+        <h1>{title}</h1>
+        <p>{content}</p>
     </section>
   )
 }

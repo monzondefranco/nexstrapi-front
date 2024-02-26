@@ -1,21 +1,18 @@
-import AboutUsPage from "@/components/about-us/AboutUsPage";
-import api from "../dataLayer/api";
+import AboutUsPage from "@/components/about-us/AboutUsPage"
+import api from "../dataLayer/api"
+import { Metadata } from "next";
+
+async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "About Us Page",
+    description: "This is the about us page"
+  }
+}
 
 
 async function getData() {
-  const { data } = await api.aboutUsPage.get({
-    query: {
-      populate: [
-        'seo',
-        'seo.metaImage',
-        'seo.metaSocial',
-        'seo.metaSocial.image',
-        'highlights',
-      ],
-    },
-  })
-
-  return data?.attributes || {}
+  const { data } = await api.aboutUsPage.get();
+  return data?.attributes || {};
 }
 
 export default async function AboutPage() {
