@@ -1,27 +1,13 @@
 const api = {
-    global: {
-      get: getSinglePage<GlobalEntry>('/globals'),
-      getAll: () =>
-        getSinglePage<GlobalEntry>('/globals')({
-          query: {
-            populate: [
-              'logo',
-              'logoIcon',
-              'socials',
-              'seo',
-              'seo.metaImage',
-              'seo.metaSocial.image',
-              'seo.metaSocial.image',
-              'footerLinks.items',
-              'navbarLinks',
-              'navbarTopCities',
-            ],
-          },
-        }),
-    },
     aboutUsPage: {
       get: getSinglePage<AboutUsEntry>('/about-uses'),
     },
+    realtors: {
+      get: getApi<RealtorsEntry>('/realtors'),
+    },
+    cities: {
+      get: getApi<CitiesEntryArray>('/cities')
+    }
   }
 
 function getSinglePage<T>(page: string) {
@@ -124,12 +110,24 @@ const fetchApi = async <T>(
     }
   }
 
-  type GlobalEntry = {
-    title: string
-  }
-
-
   type AboutUsEntry = {
     title?: string
     content?: string
+  }
+
+  type CityEntry = Entry<City>
+  export type CitiesEntryArray = EntityEntry<City>
+
+  type RealtorsEntry = EntityEntry<Realtor>
+
+  type Realtor = {
+    firstName?: string
+    lastName?: string
+    email?: string
+    city: CityEntry
+    bio?: string
+  }
+
+  export type City = {
+    name: string
   }
