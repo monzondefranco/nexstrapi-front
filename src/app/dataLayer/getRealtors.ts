@@ -1,6 +1,6 @@
 import api, { Entry } from "./api"
 
-export async function getRealtos() {
+export async function getRealtors() {
     const { data: realtors } = await api.realtors.get(
       {
         query: {
@@ -13,11 +13,10 @@ export async function getRealtos() {
         },
       },
     )
-    console.log('data', realtors)
     return realtors || {}
   }
 
-  type City = Entry<{ name: string }>
+type City = Entry<{ name: string }>
 
 type Realtor = {
   firstName: string
