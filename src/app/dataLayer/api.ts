@@ -1,4 +1,18 @@
 const api = {
+  global: {
+    get: getSinglePage<GlobalEntry>('/globals'),
+    getAll: () =>
+      getSinglePage<GlobalEntry>('/globals')({
+        query: {
+          populate: [
+            'bannerImage',
+          ],
+        },
+      }),
+  },
+    homepage: {
+      get: getSinglePage<HomePageEntry>('/homepages'),
+    },
     aboutUsPage: {
       get: getSinglePage<AboutUsEntry>('/about-uses'),
     },
@@ -95,19 +109,18 @@ const fetchApi = async <T>(
     }
   }
 
+  export interface EntryArray<T> {
+    data: {
+      id: number
+      attributes: T
+    }[]
+  }
+
   export interface EntityEntry<T> {
     data: {
       id: number
       attributes: T
     }[]
-    meta: {
-      pagination: {
-        page: number
-        pageSize: number
-        pageCount: number
-        total: number
-      }
-    }
   }
 
   type AboutUsEntry = {
@@ -130,4 +143,31 @@ const fetchApi = async <T>(
 
   export type City = {
     name: string
+  }
+
+  export type Media = {
+    url: string
+    permalink: string
+    mime: string
+    comments: number
+    likes: number
+    alternativeText: string
+    caption: string
+    source: string
+    vertical: string
+  }
+  
+  export type MediaEntry = Entry<Media>
+  export type MediaEntryArray = EntryArray<Media>
+
+  type HomePageEntry = {
+    title?: string
+    description?: string
+  }
+
+  type GlobalEntry = {
+    title: string
+    bannerImage?: MediaEntry
+    footerText?: string
+    footerCopyright?: string
   }
