@@ -1,7 +1,8 @@
 'use client'
-
 import Tooltip from "@/components/general/Tooltip"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { twMerge } from "tailwind-merge"
 
 type Props = {
   className?: string
@@ -10,10 +11,25 @@ type Props = {
 export default function Navbar({
   className,
 }: Props) {
+  const [isTransparentNavBar, setIsTransparentNavbar] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsTransparentNavbar(window.scrollY <= 0)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
-    <div className={className}>
-      <ul className={styles.menu}>
+    <header className={twMerge(
+      styles.container,
+      isTransparentNavBar && styles.transparentNavBar,
+      className
+    )}>
+      <ul className={styles.content}>
         {NavbarItems.map((item: NavbarType) => (
             <li key={item.id} className={styles.itemContainer}>
                 {item.disabled ? 
@@ -30,14 +46,17 @@ export default function Navbar({
         ))}
         <li></li>
       </ul>
-    </div>
+    </header>
   )
 }
 
 const styles = {
-    menu: 'flex items-center space-x-4 p-6',
-    itemContainer: 'cursor-pointer',
-    disabledItem: 'text-gray-400',
+  container: 'sticky top-0 bg-black shadow-md z-30 h-navbar',
+  transparentNavBar: 'bg-transparent !bg-gradient-to-t !from-transparent !to-black/90',
+  content:
+    'flex items-center justify-center space-x-4 p-6',
+  itemContainer: 'cursor-pointer',
+  disabledItem: 'text-gray-400',
 }
 
 const NavbarItems = [
@@ -56,8 +75,8 @@ const NavbarItems = [
     {
         id: 3,
         page: 'Realtors',
-        link: '',
-        disabled: true,
+        link: '/realtors',
+        disabled: false,
     },
     {
         id: 4,

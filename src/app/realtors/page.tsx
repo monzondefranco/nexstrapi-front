@@ -1,6 +1,5 @@
-import RealtorsPage from "@/components/realtors/RealtorsPage";
 import { Metadata } from "next";
-import { getRealtors } from "../dataLayer/getRealtors";
+import RealtorsPage from "@/components/realtors/RealtorsPage";
 
 async function generateMetadata(): Promise<Metadata> {
   return {
@@ -8,12 +7,11 @@ async function generateMetadata(): Promise<Metadata> {
     description: "This is the realtors page"
   }
 }
-
 export default async function Realtors() {
 
   return (
     <section>
-        <RealtorsPage  />
+      <RealtorsPage />
     </section>
   )
 }
