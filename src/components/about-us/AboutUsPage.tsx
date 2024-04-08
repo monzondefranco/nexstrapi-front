@@ -22,5 +22,5 @@ export default function AboutUsPage({
 }
 
 const styles = {
-    container: 'flex flex-col items-center justify-between p-24',
+    container: 'flex flex-col items-center space-y-10 p-24 h-screen',
 }
